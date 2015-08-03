@@ -1,23 +1,33 @@
-//Стандартный экспорт модуля в nodejs
+// Обязательная обёртка
 module.exports = function(grunt) {
-  // Инициализация конфига GruntJS
-  grunt.initConfig({
 
-    //Настройки различных модулей GruntJS, их нужно предварительно установить через менеджер пакетов npm, или добавить в файл package.json перед запуском npm install
+    // Задачи
+    grunt.initConfig({
+        // Склеиваем
+        concat: {
+            main: {
+                src: [
+                    'bower_components/jquery/dist/jquery.js',
+                    'src/client/js/*.js'
+                ],
+                dest: 'build/main.js'
+            }
+        },
+        // Сжимаем
+        uglify: {
+            main: {
+                files: {
+                    // Результат задачи concat
+                    'build/main.min.js': '<%= concat.main.dest %>'
+                }
+            }
+        }
+    });
 
-    //Например проверка кода javascript с помощью утилиты jshint
-    jshint: {},
+    // Загрузка плагинов, установленных с помощью npm install
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    //Склеивание файлов
-    concat: {}
-
-    //И так далее
-  });
-
-  //Загрузка модулей, которые предварительно установлены
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-
-  //Эти задания будут выполнятся сразу же когда вы в консоли напечатание grunt, и нажмете Enter
-  grunt.registerTask('default', ['jshint', 'concat']);
+    // Задача по умолчанию
+    grunt.registerTask('default', ['concat', 'uglify']);
 };
