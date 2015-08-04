@@ -1,7 +1,8 @@
 requirejs.config({
 
 	paths: {
-		'jquery': '../../../bower_components/jquery/dist/jquery'
+		'jquery': '../../../bower_components/jquery/dist/jquery',
+		'd3': '../../../bower_components/d3/d3',
 	},
     //Remember: only use shim config for non-AMD scripts,
     //scripts that do not already call define(). The shim
@@ -20,6 +21,9 @@ requirejs.config({
         },
         'underscore': {
             exports: '_'
+        },
+        d3: {
+            exports: 'd3'
         }
     }
 });
