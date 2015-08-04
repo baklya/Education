@@ -1,3 +1,11 @@
 
 
-console.log(123);
+require(
+    ['js/modules/myModule'],
+    function( myModule ){
+
+    	var omg = new myModule();
+
+    	console.log(omg);
+    }
+);
