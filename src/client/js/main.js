@@ -1,7 +1,7 @@
 
 
 require(
-    ['js/modules/myModule'],
+    ['modules/myModule'],
     function( myModule ){
 
     	var omg = new myModule();

@@ -1,54 +1,43 @@
-// Обязательная обёртка
 module.exports = function(grunt) {
-
-    // Задачи
     grunt.initConfig({
-        // Склеиваем
         concat: {
             main: {
                 src: [
-                    'bower_components/jquery/dist/jquery.js',
                     'bower_components/requirejs/require.js',
-                    'src/client/js/*.js'
+                    'src/client/js/config.js',
+                    'src/client/js/main.js'
                 ],
-                dest: 'build/js/main.js'
+                dest: 'src/client/js/main.build.js'
             }
         },
-        // Сжимаем
-        uglify: {
-            main: {
-                files: {
-                    // Результат задачи concat
-                    'build/js/main.min.js': '<%= concat.main.dest %>'
-                }
-            }
-        },
-
 
         copy: {
           main: {
             files: [
-  
-              // includes files within path and its sub-directories
-              {expand: true, flatten: true, src: ['src/client/index.html'], dest: 'build/'},
-
-              {expand: true, flatten: true, src: ['src/client/js/modules/*'], dest: 'build/js/modules/'},
-
-              {expand: true, flatten: true, src: ['src/client/css/style.css'], dest: 'build/css/'}
-
+              {expand: true, flatten: true, src: ['src/client/index.html'], dest: 'build/client/'},
+              {expand: true, flatten: true, src: ['src/client/css/style.css'], dest: 'build/client/css/'}
             ],
           },
-        }
+        },
+
+        requirejs: {
+          compile: {
+            options: {
+              baseUrl: "src/client/js",
+              mainConfigFile: "src/client/js/main.build.js",
+              name: "main.build",
+              out: "build/client/js/main.optimized.js",
+              optimize: "none"
+            }
+          }
+        },
+        clean: ["src/client/js/main.build.js"]
     });
 
-
-
-
-    // Загрузка плагинов, установленных с помощью npm install
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
-    // Задача по умолчанию
-    grunt.registerTask('default', ['concat', 'uglify', 'copy']);
+    grunt.registerTask('default', ['concat', 'copy', 'requirejs', 'clean']);
 };
