@@ -1,0 +1,7 @@
+1. Two types of objects: target and hunter
+2. Target has some moving logic
+3. Hunter has some aiming, moving and shooting logic
+4. Draw all of this
+5. Implement learning
+6. Add obstacles
+7. Hunter fov, vision, prediction

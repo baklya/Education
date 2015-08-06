@@ -1,4 +1,4 @@
-define(['d3'], function(d3){
+define(['d3', 'jquery'], function(d3, jq){
  
   var module = function(container) {
 
@@ -6,8 +6,9 @@ define(['d3'], function(d3){
 		    .attr("width", "100%")
 		  .append("g");
 		    
-    
-    
+    console.log("===");
+    console.log(jq);
+    console.log("===");
     this.foo = "bar";
     
   };
