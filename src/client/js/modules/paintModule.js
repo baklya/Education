@@ -38,14 +38,16 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
       targets.push(new t(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), (2 * Math.PI * getRandomArbitrary(0, 1000)) / 1000))
     }
 
-    var nH = 1;
+    var nH = 5;
     var hunters = [];
 
-    for (var i = 0; i < nT; i++) {
+    for (var i = 0; i < nH; i++) {
       hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500)));
     }
 
-
+    for (var i = 0; i < nH; i++) {
+      hunters[i].SetTarget(targets[0]);
+    }
 
     var prev = performance.now();
     var times = 0;

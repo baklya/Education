@@ -16,11 +16,15 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
 
     var bullets = [];
 
-    var fire = function(target){
+    var fire = function(targ){
       coolDown = 100;
-      bullets.push(new p(svg, x0, y0, target.x, target.y));
+      bullets.push(new p(svg, x0, y0, targ.x, targ.y));
     }
 
+    var target;
+    this.SetTarget = function(t){
+      target = t;
+    } 
     
 
 
@@ -29,8 +33,8 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
       
       coolDown--;
       
-      if(coolDown < 0){
-        fire({x:w,y:h});
+      if(target && coolDown < 0){
+        fire(target.GetCoords());
       }
       
       

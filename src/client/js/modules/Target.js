@@ -21,6 +21,9 @@ define(['d3', 'jquery'], function(d3, jq) {
       .attr("r", 5)
       .style("fill", "white");
 
+    this.GetCoords = function(){
+      return {x: shape.attr("cx"), y: shape.attr("cy") }
+    }
 
     this.SetNextPosition = function() {
       angle += delta;
