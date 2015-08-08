@@ -7,7 +7,7 @@ define(['d3', 'jquery'], function(d3, jq) {
     var h = 600;
 
     var angle = a;
-    var delta = 2 * Math.PI / 400;
+    var delta = 2 * Math.PI / 4000;
 
     var offside = false;
 
@@ -22,7 +22,7 @@ define(['d3', 'jquery'], function(d3, jq) {
       .style("fill", "white");
 
     this.GetCoords = function(){
-      return {x: shape.attr("cx"), y: shape.attr("cy") }
+      return {x: parseFloat(shape.attr("cx")), y: parseFloat(shape.attr("cy")) };
     }
 
     this.SetNextPosition = function() {

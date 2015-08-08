@@ -1,13 +1,13 @@
 define(['d3', 'jquery'], function(d3, jq) {
 
-  var module = function(svg, x0, y0, x, y) {
+  var module = function(svg, x0, y0, x, y, s) {
 
     var w = 1200;
 
     var h = 600;
 
 
-    var speed = 10; // +10 per tick
+    var speed = s; // +1 per tick
 
     var tick = 0;
  

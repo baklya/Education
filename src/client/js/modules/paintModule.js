@@ -1,4 +1,4 @@
-define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t, h) {
+define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t, h) {
 
   var module = function(container) {
 
@@ -29,6 +29,13 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
       .attr("y", 20)
       .attr("fill", "red")
       .text("");
+      
+      
+    var hitCounter = svg.append('text')
+      .attr("x", 20)
+      .attr("y", 40)
+      .attr("fill", "red")
+      .text("Hits: 0");
 
 
     var nT = 1;
@@ -38,16 +45,16 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
       targets.push(new t(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), (2 * Math.PI * getRandomArbitrary(0, 1000)) / 1000))
     }
 
-    var nH = 5;
+    var nH = 1;
     var hunters = [];
 
     for (var i = 0; i < nH; i++) {
-      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500)));
+      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[0]));
     }
 
-    for (var i = 0; i < nH; i++) {
-      hunters[i].SetTarget(targets[0]);
-    }
+    //for (var i = 0; i < nH; i++) {
+    //  hunters[i].SetTarget(targets[0]);
+    //}
 
     var prev = performance.now();
     var times = 0;
