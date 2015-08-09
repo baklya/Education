@@ -143,7 +143,24 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
         bullets[i].Tick();
       }
 
-
+      // TODO check bullets positions
+      
+      var newBullets = [];
+      
+      for (var i = 0; i < bullets.length; i++) {
+        //bullets[i].Tick();
+        var bltPos = bullets[i].GetCoords();
+        
+        if (bltPos.y < h && bltPos.y > 0 && bltPos.x < w && bltPos.x > 0) {
+          newBullets.push(bullets[i]);
+        }
+        else{
+          bullets[i].Remove();
+        }
+      }
+      
+      
+      bullets = newBullets;
 
       targetPrevPos = target.GetCoords();
     }

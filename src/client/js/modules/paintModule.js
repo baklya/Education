@@ -1,4 +1,4 @@
-define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t, h) {
+define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t, h) {
 
   var module = function(container) {
 
@@ -49,7 +49,7 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
     var hunters = [];
 
     for (var i = 0; i < nH; i++) {
-      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[0]));
+      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i]));
     }
 
     //for (var i = 0; i < nH; i++) {
