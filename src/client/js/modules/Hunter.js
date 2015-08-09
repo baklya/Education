@@ -1,6 +1,6 @@
 define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
 
-  var module = function(svg, x0, y0, t) {
+  var module = function(svg, x0, y0, t, label) {
 
     var w = 1200;
 
@@ -17,8 +17,15 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
       x: 0,
       y: 0
     };
-
+    
     var targetPrevPos = target.GetCoords();
+    
+    var targetAccel = {
+      x: 0,
+      y: 0
+    };
+
+    var targetPrevVelocity = {x: 0, y: 0};
 
     var shape = svg.append("circle")
       .attr("cx", x0)
@@ -126,9 +133,17 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
       targetVelocity.x = target.GetCoords().x - targetPrevPos.x;
 
       targetVelocity.y = target.GetCoords().y - targetPrevPos.y;
-
       
+      
+      targetAccel.x = targetVelocity.x - targetPrevVelocity.x;
 
+      targetAccel.y = targetVelocity.y - targetPrevVelocity.y;
+      
+      
+          
+
+      //label.text("AccelX: " + targetAccel.x + " AccelY: " + targetAccel.y + "AbsAccel: " + Math.sqrt(targetAccel.x * targetAccel.x + targetAccel.y * targetAccel.y) )
+      label.text("AbsAccel: " + Math.sqrt(targetAccel.x * targetAccel.x + targetAccel.y * targetAccel.y) );
 
       coolDown--;
 
@@ -163,6 +178,9 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
       bullets = newBullets;
 
       targetPrevPos = target.GetCoords();
+      
+      targetPrevVelocity.x = targetVelocity.x;
+      targetPrevVelocity.y = targetVelocity.y;
     }
 
 

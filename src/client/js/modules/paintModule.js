@@ -37,6 +37,11 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
       .attr("fill", "red")
       .text("Hits: 0");
 
+    var someMessage = svg.append('text')
+      .attr("x", 20)
+      .attr("y", 60)
+      .attr("fill", "red")
+      .text("");
 
     var nT = 1;
     var targets = [];
@@ -49,7 +54,7 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
     var hunters = [];
 
     for (var i = 0; i < nH; i++) {
-      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i]));
+      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i], someMessage));
     }
 
     //for (var i = 0; i < nH; i++) {
