@@ -1,7 +1,8 @@
-define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t, h) {
+define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t, h) {
 
   var module = function(container) {
 
+    var paintModule = this;
 
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
@@ -31,11 +32,14 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
       .text("");
       
       
+      
+      var hits = 0;
+      var shots = 0;
     var hitCounter = svg.append('text')
       .attr("x", 20)
       .attr("y", 40)
       .attr("fill", "red")
-      .text("Hits: 0");
+      .text(hits + "/" + shots);
 
     var someMessage = svg.append('text')
       .attr("x", 20)
@@ -54,8 +58,22 @@ define(['d3', 'jquery', 'modules/Target', 'modules/Hunter'], function(d3, jq, t,
     var hunters = [];
 
     for (var i = 0; i < nH; i++) {
-      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i], someMessage));
+      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i], paintModule));
     }
+
+    this.IncrHits = function(){
+      hits++;
+      hitCounter.text(hits + "/" + shots + "=" + (hits/shots * 100));
+    };
+    
+    this.IncrShots = function(){
+      shots++;
+      hitCounter.text(hits + "/" + shots + "=" + (hits/shots * 100));
+    };
+    
+    this.Log = function(text){
+      someMessage.text(text);
+    };
 
     //for (var i = 0; i < nH; i++) {
     //  hunters[i].SetTarget(targets[0]);

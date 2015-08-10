@@ -1,15 +1,16 @@
 define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
 
-  var module = function(svg, x0, y0, t, label) {
+  var module = function(svg, x0, y0, t, paintModule) {
 
     var w = 1200;
 
     var h = 600;
 
-    var coolDown = 100;
+    var coolDown = 20;
 
     var target = t;
 
+    var ammoCount = 10;
 
     var bulletSpeed = 5;
 
@@ -36,7 +37,7 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
     var bullets = [];
 
     var fire = function(targ) {
-      coolDown = 100;
+      coolDown = 20;
 
       var bulletVelocity = {
         x: 0,
@@ -53,9 +54,6 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
       
       
       var T = -1;
-
-      var k = (y0 - targ.y) / (x0 - targ.x);
-
 
 
       var a = bulletSpeed * bulletSpeed - targetVelocity.x * targetVelocity.x - targetVelocity.y * targetVelocity.y;
@@ -89,28 +87,14 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
       }
 
 
-      if(T > 0){
-        
-        //console.log(T);
+      if(T > 0 && ammoCount > 0){
 
-
-        //console.log(typeof targ.x);
-        
-        //console.log(typeof targetVelocity.x);
-        
         aim.x = targ.x + targetVelocity.x * T;
 
         aim.y = targ.y + targetVelocity.y * T;
-   
-   
-        
-        //console.log(aim);
-        
-        
-        //console.log(x0 );
-        
-        //console.log(y0 );
-        
+
+        paintModule.IncrShots();
+        ammoCount--;
         bullets.push(new p(svg, x0, y0, aim.x, aim.y, bulletSpeed));
       }
 
@@ -143,7 +127,7 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
           
 
       //label.text("AccelX: " + targetAccel.x + " AccelY: " + targetAccel.y + "AbsAccel: " + Math.sqrt(targetAccel.x * targetAccel.x + targetAccel.y * targetAccel.y) )
-      label.text("AbsAccel: " + Math.sqrt(targetAccel.x * targetAccel.x + targetAccel.y * targetAccel.y) );
+      paintModule.Log("AbsAccel: " + Math.sqrt(targetAccel.x * targetAccel.x + targetAccel.y * targetAccel.y) );
 
       coolDown--;
 
@@ -172,6 +156,20 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
         else{
           bullets[i].Remove();
         }
+        
+        
+        
+        
+        if (Math.abs(bltPos.x - target.GetCoords().x) < 6.5 && Math.abs(bltPos.y - target.GetCoords().y) < 6.5) {
+          //newBullets.push(bullets[i]);
+          
+          bullets[i].Remove();
+          paintModule.IncrHits();
+        }
+        //else{
+          
+        //}
+        
       }
       
       

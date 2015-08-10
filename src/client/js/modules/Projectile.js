@@ -43,6 +43,10 @@ define(['d3', 'jquery'], function(d3, jq) {
     this.Remove = function() {
       shape.remove();
       removed = true;
+      
+      shape
+          .attr("cx", -100000)
+          .attr("cy", -100000);
     };
 
     this.Tick = function(target) {
@@ -51,17 +55,9 @@ define(['d3', 'jquery'], function(d3, jq) {
       if (!removed) {
         tick++;
 
-        //var bltPos = this.GetCoords();
-
         shape
           .attr("cx", (x0 + speed * tick * Math.cos(alpha)))
           .attr("cy", (y0 + speed * tick * Math.sin(alpha)));
-
-        //if (bltPos.y > h || bltPos.y < 0 || bltPos.x > w || bltPos.x < 0) {
-
-        //  shape.Remove();
-        //  removed = true;
-        //}
 
       }
 

@@ -7,12 +7,9 @@ define(['d3', 'jquery'], function(d3, jq) {
     var h = 600;
 
     var angle = a;
-    var speed = 1;
+    var speed = 10;
     
     //var delta = 2 * Math.PI / 4000;
-
-
-
 
     var shape = svg.append("circle")
       .attr("cx", x0)
@@ -22,37 +19,20 @@ define(['d3', 'jquery'], function(d3, jq) {
 
 
 
-
-
     this.GetCoords = function(){
       return {x: parseFloat(shape.attr("cx")), y: parseFloat(shape.attr("cy")) };
     };
     
     
-    
- 
     this.SetNextPosition = function() {
-      //i++;
-
-        if (y0 > h) {
-         
+      
+        if (y0 > h || y0 < 0) {
           angle = - angle;
         }
 
 
-        if (y0 < 0) {
-        
-          angle = - angle;
-        }
 
-
-        if (x0 > w) {
-          
-          angle = Math.PI - angle;
-        }
-
-        if (x0 < 0) {
-          
+        if (x0 > w || x0 < 0) {
           angle = Math.PI - angle;
         }
 
