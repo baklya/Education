@@ -10,7 +10,7 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
 
     var target = t;
 
-    var ammoCount = 10;
+    var ammoCount = 40;
 
     var bulletSpeed = 5;
 

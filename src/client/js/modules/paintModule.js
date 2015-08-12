@@ -30,7 +30,14 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
       .attr("y", 20)
       .attr("fill", "red")
       .text("");
+  
       
+      var sign = svg.append('text')
+      .attr("x", 500)
+      .attr("y", 460)
+      .attr("font-size", 400)
+      .attr("fill", "green")
+      .text("5");
       
       
       var hits = 0;
