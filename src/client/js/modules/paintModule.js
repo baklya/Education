@@ -44,27 +44,55 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
 
 
     var sign = svg.append('text')
-      .attr("x", 10)
-      .attr("y", 10)
-      .attr("font-size", 400)
+      .attr("x", 100)
+      .attr("y", 100)
+      .attr("font-size", 100)
+      .attr("font-family", "Times New Roman")
       .attr("fill", "green")
       .text("5");
 
 
 
+    var svgToCanvas = function(svgElement, canvas){
+      
+      
+      var ctx = canvas.getContext('2d');
+
+      var data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
+        svgElement.outerHTML +
+        '</svg>';
+
+      var DOMURL = window.URL || window.webkitURL || window;
+
+      var img = new Image();
+      var svg = new Blob([data], {
+        type: 'image/svg+xml;charset=utf-8'
+      });
+      var url = DOMURL.createObjectURL(svg);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        DOMURL.revokeObjectURL(url);
+      }
+
+      img.src = url;
+      
+    }
+
+    var canvas = document.getElementById('canvas');
+
+    svgToCanvas(sign[0][0], canvas);
+
+/*
     sign.on("click", function() {
-      console.log(sign[0][0].outerHTML);
+      //console.log(sign[0][0].outerHTML);
 
 
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
 
       var data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
-        '<foreignObject width="100%" height="100%">' +
-        '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:140px">' +
         sign[0][0].outerHTML +
-        '</div>' +
-        '</foreignObject>' +
         '</svg>';
 
       var DOMURL = window.URL || window.webkitURL || window;
@@ -84,6 +112,7 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
 
 
     })
+    */
 
     // TODO Load shape to svg, load it to canvas, make tools to check coordinates of the shape
     // http://getcontext.net/read/svg-images-on-a-html5-canvas
