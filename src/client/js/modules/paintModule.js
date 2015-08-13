@@ -1,5 +1,16 @@
 define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t, h) {
 
+
+
+
+
+
+
+
+
+
+
+
   var module = function(container) {
 
     var paintModule = this;
@@ -30,18 +41,57 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
       .attr("y", 20)
       .attr("fill", "red")
       .text("");
-  
-      
-      var sign = svg.append('text')
-      .attr("x", 500)
-      .attr("y", 460)
+
+
+    var sign = svg.append('text')
+      .attr("x", 10)
+      .attr("y", 10)
       .attr("font-size", 400)
       .attr("fill", "green")
       .text("5");
-      
-      
-      var hits = 0;
-      var shots = 0;
+
+
+
+    sign.on("click", function() {
+      console.log(sign[0][0].outerHTML);
+
+
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+
+      var data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
+        '<foreignObject width="100%" height="100%">' +
+        '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:140px">' +
+        sign[0][0].outerHTML +
+        '</div>' +
+        '</foreignObject>' +
+        '</svg>';
+
+      var DOMURL = window.URL || window.webkitURL || window;
+
+      var img = new Image();
+      var svg = new Blob([data], {
+        type: 'image/svg+xml;charset=utf-8'
+      });
+      var url = DOMURL.createObjectURL(svg);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        DOMURL.revokeObjectURL(url);
+      }
+
+      img.src = url;
+
+
+    })
+
+    // TODO Load shape to svg, load it to canvas, make tools to check coordinates of the shape
+    // http://getcontext.net/read/svg-images-on-a-html5-canvas
+    // http://people.mozilla.org/~roc/rendering-HTML-elements-to-canvas.html
+    // http://robert.ocallahan.org/2011/11/drawing-dom-content-to-canvas.html
+
+    var hits = 0;
+    var shots = 0;
     var hitCounter = svg.append('text')
       .attr("x", 20)
       .attr("y", 40)
@@ -65,20 +115,20 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
     var hunters = [];
 
     for (var i = 0; i < nH; i++) {
-      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i], paintModule));
+      hunters.push(new h(svg, getRandomArbitrary(100, 1000), getRandomArbitrary(100, 500), targets[i], paintModule, sign, svg));
     }
 
-    this.IncrHits = function(){
+    this.IncrHits = function() {
       hits++;
-      hitCounter.text(hits + "/" + shots + "=" + (hits/shots * 100));
+      hitCounter.text(hits + "/" + shots + "=" + (hits / shots * 100));
     };
-    
-    this.IncrShots = function(){
+
+    this.IncrShots = function() {
       shots++;
-      hitCounter.text(hits + "/" + shots + "=" + (hits/shots * 100));
+      hitCounter.text(hits + "/" + shots + "=" + (hits / shots * 100));
     };
-    
-    this.Log = function(text){
+
+    this.Log = function(text) {
       someMessage.text(text);
     };
 

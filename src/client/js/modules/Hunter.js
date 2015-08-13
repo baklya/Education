@@ -1,6 +1,6 @@
 define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
 
-  var module = function(svg, x0, y0, t, paintModule) {
+  var module = function(svg, x0, y0, t, paintModule, sign, svg) {
 
     var w = 1200;
 
@@ -172,6 +172,7 @@ define(['d3', 'jquery', 'modules/Projectile'], function(d3, jq, p) {
         
       }
       
+
       
       bullets = newBullets;
 
