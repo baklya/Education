@@ -50,15 +50,54 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
       .attr("font-family", "Times New Roman")
       .attr("fill", "green")
       .text("5");
+    
+    
+    //bbox = text[0][0].getBBox()
+//ctm = text[0][0].getCTM()
+    
+    
+    
+    
+    
+     //svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 
+  //text = svg.append('text').text('Hello world!').attr('dy', '0.35em').attr('transform', 'translate(480,250)');
 
+  //var setTM = function(element, m) {
+  //  return element.transform.baseVal.initialize(element.ownerSVGElement.createSVGTransformFromMatrix(m));
+  //};
+
+  //var bbox2 = sign[0][0].getBBox();
+
+  //var ctm = sign[0][0].getCTM();
+
+  //var rect = svg.insert('rect', 'text').attr('x', bbox2.x).attr('y', bbox2.y).attr('width', bbox2.width).attr('height', bbox2.height);
+
+  //setTM(rect[0][0], ctm);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    console.log("+++++++");
+    //console.log(ctm);
+    console.log(sign[0][0].getBBox());
 
     var svgToCanvas = function(svgElement, canvas){
       
       
       var ctx = canvas.getContext('2d');
-
-      var data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
+      
+      var localBbox = svgElement.getBBox();
+      var data = '<svg xmlns="http://www.w3.org/2000/svg">' +
+        '<rect x="'+ localBbox.x +'" y="'+ localBbox.y +'" width="'+ localBbox.width +'" height="'+ localBbox.height +'" style="fill:rgb(0,0,0);" />' +
         svgElement.outerHTML +
         '</svg>';
 
@@ -82,7 +121,46 @@ define(['d3', 'jquery', 'modules/Target2', 'modules/Hunter'], function(d3, jq, t
     var canvas = document.getElementById('canvas');
 
     svgToCanvas(sign[0][0], canvas);
+    
+    
+    
+    function findPos(obj) {
+        var curleft = 0, curtop = 0;
+        if (obj.offsetParent) {
+            do {
+              curleft += obj.offsetLeft;
+              curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+            return {
+              x: curleft,
+              y: curtop
+            };
+            }
+            return undefined;
+            }
 
+            function rgbToHex(r, g, b) {
+              if (r > 255 || g > 255 || b > 255)
+                throw "Invalid color component";
+              return ((r << 16) | (g << 8) | b).toString(16);
+            }
+      
+    
+    $('#canvas').mousemove(function(e) {
+      var pos = findPos(this);
+      var x = e.pageX - pos.x;
+      var y = e.pageY - pos.y;
+      var coord = "x=" + x + ", y=" + y;
+      var c = this.getContext('2d');
+      var p = c.getImageData(x, y, 1, 1).data; 
+      var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+      
+      console.log(hex);
+      //$('#status').html(coord + "<br>" + hex);
+  });
+    
+    
+    
 /*
     sign.on("click", function() {
       //console.log(sign[0][0].outerHTML);
